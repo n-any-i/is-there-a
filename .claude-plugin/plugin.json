@@ -1,0 +1,10 @@
+{
+  "name": "is-there-a",
+  "version": "1.0.0",
+  "description": "Checks whether someone has already built it — before your AI agent starts building. Prior-art and existing-product scan that triggers on build intent, for software, physical products, brands, and services.",
+  "author": { "name": "n-any-i" },
+  "homepage": "https://github.com/n-any-i/is-there-a",
+  "repository": "https://github.com/n-any-i/is-there-a",
+  "license": "MIT",
+  "keywords": ["prior-art", "competitor-scan", "market-scan", "idea-validation", "existing-products", "before-building", "research", "product-discovery"]
+}
