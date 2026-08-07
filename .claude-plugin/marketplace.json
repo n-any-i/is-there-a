@@ -1,0 +1,15 @@
+{
+  "name": "is-there-a",
+  "owner": { "name": "n-any-i" },
+  "metadata": {
+    "description": "A pre-build existence check for AI agents.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "is-there-a",
+      "source": "./",
+      "description": "Checks whether someone has already built it — before your AI agent starts building. Triggers on build intent, maps direct hits, adjacent products, reusable components and abandoned attempts, then gives one verdict."
+    }
+  ]
+}
