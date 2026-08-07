@@ -1,53 +1,49 @@
 # Install
 
-Pick the row that matches your tool. All four take under two minutes.
-
-| Your tool | Use this file | Method |
-|---|---|---|
-| Claude Code | the plugin | `/plugin marketplace add` — one line |
-| Claude Cowork / claude.ai | `SKILL-standalone.md` | Save as a skill |
-| Codex, Cursor, Aider, Windsurf, Gemini CLI, Copilot | `AGENTS.md` | Copy into your project |
-| ChatGPT, Gemini, anything else | `prompt.md` | Paste into custom instructions |
+| Your tool | Method |
+|---|---|
+| [Claude Code](#claude-code) | One-line plugin install |
+| [Claude apps — Cowork, chat, desktop](#claude-apps--cowork-chat-desktop) | Upload a zip in Settings |
+| [Codex, Cursor, Aider, Windsurf, Gemini CLI, Copilot](#codex-cursor-and-other-agents) | Copy `AGENTS.md` into your project |
+| [ChatGPT, Gemini, anything else](#chatgpt-gemini-and-anything-else) | Paste from `prompt.md` |
 
 ---
 
-## Claude Code (recommended)
+## Claude Code
 
 ```
 /plugin marketplace add n-any-i/is-there-a
 /plugin install is-there-a@is-there-a
 ```
 
-That's it. The skill triggers on its own the next time you describe something you want to build.
-
-**To install manually instead** (no marketplace):
+Manual alternative:
 
 ```bash
 git clone https://github.com/n-any-i/is-there-a.git
 cp -r is-there-a/skills/is-there-a ~/.claude/skills/
 ```
 
-For a single project rather than everywhere, copy it to `.claude/skills/is-there-a/` inside that
-project instead.
-
-Verify with `/plugin` (it should be listed) or by typing `/is-there-a`.
+Use `.claude/skills/` inside a project instead of `~/.claude/skills/` to scope it to that project.
+Check it's there with `/plugin`, or type `/is-there-a`.
 
 ---
 
-## Claude Cowork / claude.ai
+## Claude apps — Cowork, chat, desktop
 
-Saving a skill to your account stores **one file**, so use the single-file edition — it has the
-reference material inlined and doesn't depend on the rest of the repo.
+1. Download **[`dist/is-there-a.zip`](dist/is-there-a.zip)**.
+2. In Claude: **Settings → Capabilities** and turn on *Code execution and file creation* (skills
+   need it).
+3. **Settings → Customize → Skills → + → Create skill**, upload the zip, toggle it on.
 
-1. Open `SKILL-standalone.md`
-2. Save it as a skill in your account
-3. Start a new chat and describe something you want to build
+The zip contains the full skill — `SKILL.md` plus its reference files. Don't rezip it from a
+different folder level; the archive needs the `is-there-a/` folder at its root.
 
-If you want the full multi-file version instead, use Claude Code above.
+`SKILL-standalone.md` is the same method inlined into one file. Use it only if you're pasting the
+skill somewhere that takes a single file.
 
 ---
 
-## Codex, Cursor, Aider, Windsurf, Gemini CLI, GitHub Copilot
+## Codex, Cursor, and other agents
 
 Copy `AGENTS.md` into the project you're working in:
 
@@ -61,61 +57,45 @@ Or append it to an `AGENTS.md` you already have:
 cat AGENTS.md >> /path/to/your/project/AGENTS.md
 ```
 
-Tool-specific locations, if you prefer them:
-
-- **Cursor** — `.cursor/rules/is-there-a.mdc`
-- **GitHub Copilot** — `.github/copilot-instructions.md`
-- **Gemini CLI** — `GEMINI.md`, or import from `AGENTS.md`
-
-Note that Claude Code reads `CLAUDE.md`, not `AGENTS.md`. If you're on Claude Code, use the plugin.
+Tool-specific alternatives: **Cursor** → `.cursor/rules/is-there-a.mdc` · **Copilot** →
+`.github/copilot-instructions.md` · **Gemini CLI** → `GEMINI.md`. Claude Code reads `CLAUDE.md`, not
+`AGENTS.md` — use the plugin above instead.
 
 ---
 
-## ChatGPT, Gemini, or anything with an instructions box
+## ChatGPT, Gemini, and anything else
 
-Open `prompt.md` and copy one of the two blocks:
-
-- **Full version** (~550 words) — for ChatGPT custom instructions, a Project, or a Gem
-- **Compact version** (~130 words) — for tighter boxes, or the top of a long chat
-
-Paste, save, and describe something you want to build.
+Copy a block from [`prompt.md`](prompt.md) into custom instructions, a Project, or a Gem — the full
+version (~550 words) where you have room, the compact one (~130 words) where you don't.
 
 ---
 
-## Checking it works
+## Check it works
 
-Three quick tests. Start a **new** conversation for each — a scan already run in a session won't
-re-trigger.
+Three prompts, each in a **new** conversation (a scan already run in a session won't re-trigger).
 
-1. **Should fire.** "I want to build a tool that turns my meeting notes into follow-up emails."
-   → Expect an offer to scan, with time and token estimates.
-2. **Should also fire (non-software).** "I want to start a brand of chewable coffee."
-   → Same offer. If it doesn't fire, the description needs widening.
-3. **Should NOT fire.** "Design a logo for my coffee brand" or "fix the bug in my checkout page."
-   → Expect no scan offer. If it fires, the triggers are too greedy.
+1. **Should fire** — "I want to build a tool that turns my meeting notes into follow-up emails."
+2. **Should also fire** — "I want to start a brand of chewable coffee." *(If not, the description
+   needs widening for non-software ideas.)*
+3. **Should NOT fire** — "Design a logo for my coffee brand." *(If it fires, the triggers are too
+   greedy.)*
 
-If any test misbehaves, edit the `description:` line at the top of `SKILL.md` — that line is what
-decides when the skill loads, not the instructions below it.
+Misbehaving? Edit the `description:` line at the top of `SKILL.md`. That line decides when the skill
+loads — not the instructions below it.
 
 ---
 
-## What it costs to have installed
+## What it costs
 
-Only the name and description stay loaded in every conversation — about 200 tokens, roughly a
-paragraph. The instructions (~2,500 tokens) load only when the skill triggers, and the reference
-files only when a scan actually needs them.
-
-The scan itself is the real cost, and you're asked which size you want before it runs:
-
-| Mode | Time | Tokens |
-|---|---|---|
-| Quick (default) | ~2 min | ~50k |
-| Standard | ~10–15 min | ~150–300k |
+Only the name and description stay loaded in every conversation — about 200 tokens. Instructions
+(~2,500) load on trigger; reference files load only when a scan needs them. The scan itself is the
+real cost, and you choose the size: **Quick** ~2 min / ~50k tokens, **Standard** ~10–15 min /
+~150–300k.
 
 ---
 
-## Uninstalling
+## Uninstall
 
-- **Claude Code plugin:** `/plugin uninstall is-there-a@is-there-a`
-- **Manual skill:** delete `~/.claude/skills/is-there-a/`
-- **AGENTS.md / prompt:** delete the section you pasted
+Claude Code plugin → `/plugin uninstall is-there-a@is-there-a` · Manual skill → delete the
+`is-there-a` folder · Claude apps → toggle off or delete in Settings → Skills · AGENTS.md or prompt
+→ delete the pasted section.
